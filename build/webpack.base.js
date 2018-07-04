@@ -17,12 +17,17 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/]
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/]
+            }
           }
-        },
+        ],
         include: [path.resolve(__dirname, './../src')]
       },
       {
@@ -30,7 +35,16 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
+          'postcss-loader',
           'less-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
         ]
       },
       {
@@ -40,6 +54,17 @@ module.exports = {
           limit: 10 * 1024,
           name: 'img/[name].[hash:7].[ext]'
         }
+      },
+      {
+        test: /\.(eot|woff|woff2|ttf)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            limit: 10 * 1024,
+            name: '[name].[has:7].[ext]'
+          }
+        }
+
       }
     ]
   },
