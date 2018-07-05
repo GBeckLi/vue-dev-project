@@ -1,29 +1,43 @@
 <template>
   <div id="app">
-    <h1>Hello world</h1>
-    <h2>{{ text }}</h2>
-    <el-button @click="visible = true">Button</el-button>
-    <el-dialog :visible="visible" @close="visible = false" title="hello world">
-      <p>try ELement</p>
-    </el-dialog>
+    <el-container>
+      <el-header style="padding: 0;">
+        <el-menu mode="horizontal" :default-active="activeMenu">
+          <el-menu-item index="1">Itach的主页</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">我的工作台</template>
+            <el-menu-item index="2-1">Sublime</el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-header>
+    </el-container>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-// import { Dialog } from 'element-ui';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// Vue.use(Dialog);
 
 @Component
 export default class AppComponent extends Vue {
+
+  // props
   @Prop({default: 'Lovely Kathy'})
   text: string;
 
+  // data
   visible: boolean = false;
 
+  // computed
+  get activeMenu(): string {
+    console.log(this.$store.state.actionMenu);
+    return this.$store.state.actionMenu;
+  }
+
+  // methods
   closeDialog(): void {
     this.visible = false;
   }
