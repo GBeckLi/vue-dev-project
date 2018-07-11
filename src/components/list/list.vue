@@ -46,6 +46,7 @@ export default class ListComponent extends Vue {
     console.log(index);
     this.list.splice(index, 1);
     this.delete(this.list);
+    this.$store.commit('list/countChange', -1);
   }
 
   itemHover(val) {
